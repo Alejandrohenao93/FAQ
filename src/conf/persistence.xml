@@ -7,7 +7,6 @@
     <class>com.politecnico.Entitys.Permisos</class>
     <class>com.politecnico.Entitys.Comentarios</class>
     <class>com.politecnico.Entitys.Categorias</class>
-    <class>com.politecnico.Entitys.Usuarios</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:4700/FAQ?zeroDateTimeBehavior=convertToNull"/>
