@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -28,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author alejandro.henao
+ * @author Sebas Developer
  */
 @Entity
 @Table(name = "comentarios")
@@ -57,8 +58,11 @@ public class Comentarios implements Serializable {
     @Column(name = "fechaComentario")
     @Temporal(TemporalType.DATE)
     private Date fechaComentario;
-    @ManyToMany(mappedBy = "comentariosCollection")
-    private Collection<Respuesta> respuestaCollection;
+    @JoinTable(name = "preguntas_has_comentarios", joinColumns = {
+        @JoinColumn(name = "idComentario", referencedColumnName = "idComentario")}, inverseJoinColumns = {
+        @JoinColumn(name = "idPregunta", referencedColumnName = "idPregunta")})
+    @ManyToMany
+    private Collection<Preguntas> preguntasCollection;
     @OneToMany(mappedBy = "idComentarioResp")
     private Collection<Comentarios> comentariosCollection;
     @JoinColumn(name = "idComentarioResp", referencedColumnName = "idComentario")
@@ -113,12 +117,12 @@ public class Comentarios implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Respuesta> getRespuestaCollection() {
-        return respuestaCollection;
+    public Collection<Preguntas> getPreguntasCollection() {
+        return preguntasCollection;
     }
 
-    public void setRespuestaCollection(Collection<Respuesta> respuestaCollection) {
-        this.respuestaCollection = respuestaCollection;
+    public void setPreguntasCollection(Collection<Preguntas> preguntasCollection) {
+        this.preguntasCollection = preguntasCollection;
     }
 
     @XmlTransient

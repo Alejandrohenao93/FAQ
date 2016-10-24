@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">      
+    <h:head>
+        <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+        <title>Facelet Title</title>
+    </h:head>
+    <ui:composition template="/layout/autorlayout.xhtml">
+        <ui:define name="title">Crear Preguntas</ui:define>
+        <ui:define name="scripts">
+            <script>
+                function classactive() {
+                    document.getElementById("pageCrearPreguntas").setAttribute("class", "active");
+                }
+            </script>
+        </ui:define>
+        <ui:define name="contenido">            
+            <h:form>
+
+                <section class="seccion container" style="width: 50%; padding: 10px;" id="seccionCrearPregunta">
+                    <div align="center">
+                        <h:outputLabel value="Creacion de Preguntas"></h:outputLabel>
+                        <h:panelGrid columns="2" columnClasses="separador">                            
+                            <h:panelGroup>
+                                <h:outputLabel value="Titulo Pregunta"></h:outputLabel>
+                            </h:panelGroup>  
+                            <h:panelGroup>
+                                <h:inputText value="#{preguntasBean.preguntas.caPregunta}" class="form-control"></h:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Respuesta"></h:outputLabel>
+                            </h:panelGroup>  
+                            <h:panelGroup>
+                                <h:inputTextarea value="#{preguntasBean.preguntas.caRespuesta}" class="form-control" cols="40" rows="5" style="resize: none;"></h:inputTextarea>
+                            </h:panelGroup>
+                            <h:outputLabel value="Categorias" class="text-left"></h:outputLabel>
+                            <h:selectOneMenu class="form-control" value="#{preguntasBean.preguntas.idCategoria}">
+                                <f:selectItem itemValue="0" itemLabel="Seleccione una"></f:selectItem>
+                                <f:selectItems value="#{categoriasBean.listadoCategorias}" ></f:selectItems>
+                            </h:selectOneMenu>
+                            <h:panelGroup>
+                                <h:outputLabel value="Fecha Inicio Vigencia"></h:outputLabel>                                
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <p:calendar id="fechaInicioVigencia"  value="#{preguntasBean.preguntas.feInicioVigencia}" class="form-controls"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Fecha Final Vigencia"></h:outputLabel>                                
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <p:calendar id="fechaFinVigencia"  value="#{preguntasBean.preguntas.feFinVigencia}" class="form-controls"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="Palabra Clave"></h:outputLabel>                                
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:inputText value="#{preguntasBean.preguntas.caPalabraClave}" class="form-control"></h:inputText>
+                            </h:panelGroup>                            
+                        </h:panelGrid>     
+                        <h:commandButton class="btn btn-success" value="Crear Pregunta"></h:commandButton>                        
+                    </div>
+                </section>
+            </h:form>    
+        </ui:define>
+    </ui:composition>   
+</html>
+
+

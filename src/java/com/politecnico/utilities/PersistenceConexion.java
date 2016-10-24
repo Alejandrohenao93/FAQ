@@ -5,11 +5,15 @@
  */
 package com.politecnico.utilities;
 
+import com.politecnico.Entitys.Categorias;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
 
 /**
  *
@@ -50,13 +54,15 @@ public abstract class PersistenceConexion {
 
     public List<? extends Object> obtenerLista(String query,Object[] parametros) {
 
-        querys = manager.createQuery(query);
+        
+       querys = manager.createNamedQuery(query);
          if(parametros != null && parametros.length > 0){
             for (int i = 0; i < parametros.length; i++) {
                 querys.setParameter((i+1),parametros[i]);
             }         
         }
-        return (List<? extends Object>) querys.getResultList();
+         
+        return querys.getResultList();
     }
 
     public <T extends Object> T obtenerObjeto(Class<T> clase, int id) {
