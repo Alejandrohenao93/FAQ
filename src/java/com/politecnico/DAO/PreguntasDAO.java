@@ -5,6 +5,7 @@
  */
 package com.politecnico.DAO;
 
+import com.politecnico.Entitys.Preguntas;
 import com.politecnico.utilities.PersistenceConexion;
 
 /**
@@ -13,6 +14,9 @@ import com.politecnico.utilities.PersistenceConexion;
  */
 public class PreguntasDAO extends PersistenceConexion{
     
-    
+    public int crearPregunta(Preguntas pregunta){        
+        crear(pregunta);
+        return 0;
+    }
     
 }

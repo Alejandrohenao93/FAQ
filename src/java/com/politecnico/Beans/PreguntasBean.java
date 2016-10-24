@@ -5,9 +5,13 @@
  */
 package com.politecnico.Beans;
 
+import com.politecnico.DAO.PreguntasDAO;
+import com.politecnico.Entitys.Categorias;
 import com.politecnico.Entitys.Preguntas;
+import com.politecnico.Entitys.Usuario;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -18,8 +22,22 @@ import javax.faces.bean.RequestScoped;
 public class PreguntasBean {
 
     private Preguntas preguntas = new Preguntas();
-
+    private CategoriasBean categoriaBean = new CategoriasBean();
+    private PreguntasDAO daoPreguntas = new PreguntasDAO();
+    
+    
     public PreguntasBean() {
+        
+    }
+    
+    public void crearPregunta(){
+        
+        preguntas.setIdCategoria(getCategoriaBean().getCategoria());
+        Usuario autor = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
+        preguntas.setNombreUsuarioCreacion(autor.getNombre());
+        preguntas.setApellidosUsuarioCreacion(autor.getApellidos());
+        daoPreguntas.crearPregunta(preguntas);
+        
     }
 
     /**
@@ -34,6 +52,20 @@ public class PreguntasBean {
      */
     public void setPreguntas(Preguntas preguntas) {
         this.preguntas = preguntas;
+    }
+
+    /**
+     * @return the categoriaBean
+     */
+    public CategoriasBean getCategoriaBean() {
+        return categoriaBean;
+    }
+
+    /**
+     * @param categoriaBean the categoriaBean to set
+     */
+    public void setCategoriaBean(CategoriasBean categoriaBean) {
+        this.categoriaBean = categoriaBean;
     }
 
 }

@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
@@ -21,13 +22,14 @@ import javax.naming.directory.Attribute;
  * @author alejandro.henao
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 
 public class LoginBEAN {
 
     /**
      * Creates a new instance of LoginBEAN
-     */
+     */    
+    
     String user;
     String pass;
     private Usuario usuario;
@@ -57,12 +59,13 @@ public class LoginBEAN {
    
    public void validateLogin() {
      Login login = new Login(user,pass);
-     usuario = login.correctLogin();
-     if(usuario!= null){
+        setUsuario(login.correctLogin());
+     if(getUsuario()!= null){
       
          try {
-             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("Usuario", usuario);
-             FacesContext.getCurrentInstance().getExternalContext().redirect("faces/Home.xhtml");
+             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("Usuario", getUsuario());
+             FacesContext.getCurrentInstance().getExternalContext().redirect("/FAQ/pages/indexuser.jsf");
+                setUsuario((Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario"));
          } catch (IOException ex) {
              Logger.getLogger(LoginBEAN.class.getName()).log(Level.SEVERE, null, ex);
          }
@@ -70,4 +73,18 @@ public class LoginBEAN {
          
      }
 }
+
+    /**
+     * @return the usuario
+     */
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

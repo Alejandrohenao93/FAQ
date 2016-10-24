@@ -57,17 +57,17 @@ and open the template in the editor.
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="txtUsuario">Usuario</label>
-                                <h:inputText class="form-control" id="txtUsuario"></h:inputText>                                
+                                <h:inputText class="form-control" id="txtUsuario" value="#{loginBEAN.user}"></h:inputText>                                
                             </div>
                             <div class="form-group">
                                 <label for="txtPassword">Contraseña</label>
-                                <h:inputSecret class="form-control" id="txtPassword"></h:inputSecret>                                
+                                <h:inputSecret class="form-control" id="txtPassword" value="#{loginBEAN.pass}"></h:inputSecret>                                
                             </div>
                             <h:commandLink value="Olvide mi contraseña"></h:commandLink>
                         </div>
                         <div class="modal-footer">                                
                             <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
-                            <h:commandButton class="btn btn-primary" value="Ingresar" action="#{categoriasBean.crearCategoria}"></h:commandButton>                                
+                            <h:commandButton class="btn btn-primary" value="Ingresar" action="#{loginBEAN.validateLogin}"></h:commandButton>                                
                         </div>
                     </div>
                 </div>
