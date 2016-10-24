@@ -25,9 +25,9 @@ public class Login {
 
     private String usuario;
     private String clave;
-    private boolean autenticado;
+ 
 
-    private static final String LDAP_URL = "ldap://172.23.87.99:389";
+    private static final String LDAP_URL = "ldap://192.168.1.17:389";
 
     public String getUsuario() {
         return usuario;
@@ -56,19 +56,19 @@ public class Login {
             env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
             env.put(Context.PROVIDER_URL, LDAP_URL);
             env.put(Context.SECURITY_AUTHENTICATION, "simple");
-            env.put(Context.SECURITY_PRINCIPAL, this.usuario);
+            env.put(Context.SECURITY_PRINCIPAL, this.usuario+"@scaquestions.com");
             env.put(Context.SECURITY_CREDENTIALS, this.clave);
-            //Conseguimos contexto de conexion
+            
             DirContext ctx = new InitialDirContext(env);
             SearchControls searchCtls = new SearchControls();
-
-            String returnedAtts[] = {"displayName", "mail", "cn", "givenName", "sn", "groupname"};
+            
+            String returnedAtts[] = {"displayName", "mail", "cn", "givenName", "sn", "memberOf","sAMAccountName"};
 
             searchCtls.setReturningAttributes(returnedAtts);
 
             searchCtls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
-            String searchFilter = "(&(objectClass=users)(mail="+this.usuario+"))";
+             String searchFilter = "(&(objectClass=*)(samaccountname="+this.usuario+"))";
 
             String searchBase = "DC=scaquestions,DC=COM";
 
@@ -85,12 +85,14 @@ public class Login {
                 if (attrs != null) {
 
                     try {
-                        //  System.out.println("   surname: " + attrs.get("sn").get());                       
-                        user = new Usuario(attrs.get("givenName").get().toString(),
-                                attrs.get("sn").get().toString(),
-                                attrs.get("mail").get().toString(),
-                                attrs.get("groupname").get().toString(),
-                                attrs.get("cn").get().toString());
+                                             
+                        user = new Usuario((attrs.get("givenName").get()!=null)?attrs.get("givenName").get().toString():"",
+                                (attrs.get("sn").get()!=null)?attrs.get("sn").get().toString():"",
+                                (attrs.get("mail").get()!=null)?attrs.get("mail").get().toString():"",
+                                (attrs.get("memberof").get()!=null)?attrs.get("memberof").get(0).toString():"",
+                                (attrs.get("cn").get()!=null)?attrs.get("samaccountname").get().toString():"");
+                     
+                        
 
                     } catch (NullPointerException e) {
 

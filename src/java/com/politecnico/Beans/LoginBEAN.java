@@ -7,6 +7,9 @@ package com.politecnico.Beans;
 
 import com.politecnico.Entitys.Usuario;
 import com.politecnico.utilities.Login;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -56,7 +59,13 @@ public class LoginBEAN {
      Login login = new Login(user,pass);
      usuario = login.correctLogin();
      if(usuario!= null){
-         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("Usuario", usuario);
+      
+         try {
+             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("Usuario", usuario);
+             FacesContext.getCurrentInstance().getExternalContext().redirect("faces/Home.xhtml");
+         } catch (IOException ex) {
+             Logger.getLogger(LoginBEAN.class.getName()).log(Level.SEVERE, null, ex);
+         }
      }else{
          
      }
