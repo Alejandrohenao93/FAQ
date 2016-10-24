@@ -9,17 +9,16 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author alejandro.henao
+ * @author Sebas Developer
  */
 @Entity
 @Table(name = "preguntas")
@@ -42,11 +41,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Preguntas.findByFeFinVigencia", query = "SELECT p FROM Preguntas p WHERE p.feFinVigencia = :feFinVigencia"),
     @NamedQuery(name = "Preguntas.findByCaEstado", query = "SELECT p FROM Preguntas p WHERE p.caEstado = :caEstado"),
     @NamedQuery(name = "Preguntas.findByFeCreacion", query = "SELECT p FROM Preguntas p WHERE p.feCreacion = :feCreacion"),
-    @NamedQuery(name = "Preguntas.findByFeActualizacion", query = "SELECT p FROM Preguntas p WHERE p.feActualizacion = :feActualizacion"),
     @NamedQuery(name = "Preguntas.findByNombreUsuarioCreacion", query = "SELECT p FROM Preguntas p WHERE p.nombreUsuarioCreacion = :nombreUsuarioCreacion"),
     @NamedQuery(name = "Preguntas.findByApellidosUsuarioCreacion", query = "SELECT p FROM Preguntas p WHERE p.apellidosUsuarioCreacion = :apellidosUsuarioCreacion"),
+    @NamedQuery(name = "Preguntas.findByFeActualizacion", query = "SELECT p FROM Preguntas p WHERE p.feActualizacion = :feActualizacion"),
     @NamedQuery(name = "Preguntas.findByNombreUsuarioActualizacion", query = "SELECT p FROM Preguntas p WHERE p.nombreUsuarioActualizacion = :nombreUsuarioActualizacion"),
-    @NamedQuery(name = "Preguntas.findByApellidosUsuarioActualizacion", query = "SELECT p FROM Preguntas p WHERE p.apellidosUsuarioActualizacion = :apellidosUsuarioActualizacion")})
+    @NamedQuery(name = "Preguntas.findByApellidosUsuarioActualizacion", query = "SELECT p FROM Preguntas p WHERE p.apellidosUsuarioActualizacion = :apellidosUsuarioActualizacion"),
+    @NamedQuery(name = "Preguntas.findByCaPalabraClave", query = "SELECT p FROM Preguntas p WHERE p.caPalabraClave = :caPalabraClave")})
 public class Preguntas implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -70,28 +70,36 @@ public class Preguntas implements Serializable {
     @Column(name = "feCreacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date feCreacion;
+    @Basic(optional = false)
+    @Column(name = "nombreUsuarioCreacion")
+    private String nombreUsuarioCreacion;
+    @Column(name = "apellidosUsuarioCreacion")
+    private String apellidosUsuarioCreacion;
     @Column(name = "feActualizacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date feActualizacion;
-    @Column(name = "NombreUsuarioCreacion")
-    private String nombreUsuarioCreacion;
-    @Column(name = "ApellidosUsuarioCreacion")
-    private String apellidosUsuarioCreacion;
-    @Column(name = "NombreUsuarioActualizacion")
+    @Column(name = "nombreUsuarioActualizacion")
     private String nombreUsuarioActualizacion;
-    @Column(name = "ApellidosUsuarioActualizacion")
+    @Column(name = "apellidosUsuarioActualizacion")
     private String apellidosUsuarioActualizacion;
+    @Column(name = "caPalabraClave")
+    private String caPalabraClave;
+    @ManyToMany(mappedBy = "preguntasCollection")
+    private Collection<Comentarios> comentariosCollection;
     @JoinColumn(name = "idCategoria", referencedColumnName = "idCategoria")
     @ManyToOne(optional = false)
     private Categorias idCategoria;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPregunta")
-    private Collection<Respuesta> respuestaCollection;
 
     public Preguntas() {
     }
 
     public Preguntas(Integer idPregunta) {
         this.idPregunta = idPregunta;
+    }
+
+    public Preguntas(Integer idPregunta, String nombreUsuarioCreacion) {
+        this.idPregunta = idPregunta;
+        this.nombreUsuarioCreacion = nombreUsuarioCreacion;
     }
 
     public Integer getIdPregunta() {
@@ -150,14 +158,6 @@ public class Preguntas implements Serializable {
         this.feCreacion = feCreacion;
     }
 
-    public Date getFeActualizacion() {
-        return feActualizacion;
-    }
-
-    public void setFeActualizacion(Date feActualizacion) {
-        this.feActualizacion = feActualizacion;
-    }
-
     public String getNombreUsuarioCreacion() {
         return nombreUsuarioCreacion;
     }
@@ -172,6 +172,14 @@ public class Preguntas implements Serializable {
 
     public void setApellidosUsuarioCreacion(String apellidosUsuarioCreacion) {
         this.apellidosUsuarioCreacion = apellidosUsuarioCreacion;
+    }
+
+    public Date getFeActualizacion() {
+        return feActualizacion;
+    }
+
+    public void setFeActualizacion(Date feActualizacion) {
+        this.feActualizacion = feActualizacion;
     }
 
     public String getNombreUsuarioActualizacion() {
@@ -190,21 +198,29 @@ public class Preguntas implements Serializable {
         this.apellidosUsuarioActualizacion = apellidosUsuarioActualizacion;
     }
 
+    public String getCaPalabraClave() {
+        return caPalabraClave;
+    }
+
+    public void setCaPalabraClave(String caPalabraClave) {
+        this.caPalabraClave = caPalabraClave;
+    }
+
+    @XmlTransient
+    public Collection<Comentarios> getComentariosCollection() {
+        return comentariosCollection;
+    }
+
+    public void setComentariosCollection(Collection<Comentarios> comentariosCollection) {
+        this.comentariosCollection = comentariosCollection;
+    }
+
     public Categorias getIdCategoria() {
         return idCategoria;
     }
 
     public void setIdCategoria(Categorias idCategoria) {
         this.idCategoria = idCategoria;
-    }
-
-    @XmlTransient
-    public Collection<Respuesta> getRespuestaCollection() {
-        return respuestaCollection;
-    }
-
-    public void setRespuestaCollection(Collection<Respuesta> respuestaCollection) {
-        this.respuestaCollection = respuestaCollection;
     }
 
     @Override

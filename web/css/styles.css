@@ -1,0 +1,82 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 19/10/2016, 09:14:37 PM
+    Author     : Sebas Developer
+*/
+
+html{
+    position: relative;
+    min-height: 100%;
+}
+
+body{
+    
+    background-color: #e9ebee;
+    margin: 0px;
+    padding: 0px;
+    
+}
+
+header {
+    margin-top:  5px;    
+    padding: 0px;
+    height: 60px;
+    width: 100%;
+        
+
+}
+
+
+header nav{
+ 
+    margin: 0px;
+    padding: 0px;    
+
+}
+
+header nav ul li{   
+    
+    padding: 0px 10px;    
+
+}
+
+#mainsection{          
+    
+    margin-top: 30px;
+    padding: 0px;            
+    width: 100%;   
+
+}
+
+.seccion{      
+    
+    width: 100%;
+    border-radius: 3px;
+    background-color: #fff;    
+    
+}
+
+#piePagina{
+    
+
+    margin: 0px 0px 0px 0px;
+    background-color: #fff;  
+    padding: 0px;
+    height: 20px;
+    width: 100%;
+    display: block;         
+    bottom: 0;
+    text-align: center;
+    font-family: cursive;
+    font-weight: bolder;
+    line-height: 20px;
+
+}
+
+.separador{
+    padding: 10px;     
+}
