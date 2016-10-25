@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "preguntas")
 @XmlRootElement
 @NamedQueries({
+    @NamedQuery(name = "Preguntas.findActive", query = "SELECT p FROM Preguntas p WHERE p.caEstado = Aprobado and feFinVigencia >= GETDATE()"),
     @NamedQuery(name = "Preguntas.findAll", query = "SELECT p FROM Preguntas p"),
     @NamedQuery(name = "Preguntas.findByIdPregunta", query = "SELECT p FROM Preguntas p WHERE p.idPregunta = :idPregunta"),
     @NamedQuery(name = "Preguntas.findByCaPregunta", query = "SELECT p FROM Preguntas p WHERE p.caPregunta = :caPregunta"),
@@ -47,6 +48,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Preguntas.findByNombreUsuarioActualizacion", query = "SELECT p FROM Preguntas p WHERE p.nombreUsuarioActualizacion = :nombreUsuarioActualizacion"),
     @NamedQuery(name = "Preguntas.findByApellidosUsuarioActualizacion", query = "SELECT p FROM Preguntas p WHERE p.apellidosUsuarioActualizacion = :apellidosUsuarioActualizacion"),
     @NamedQuery(name = "Preguntas.findByCaPalabraClave", query = "SELECT p FROM Preguntas p WHERE p.caPalabraClave = :caPalabraClave")})
+
 public class Preguntas implements Serializable {
 
     private static final long serialVersionUID = 1L;

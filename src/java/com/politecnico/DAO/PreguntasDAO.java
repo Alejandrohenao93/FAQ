@@ -7,6 +7,7 @@ package com.politecnico.DAO;
 
 import com.politecnico.Entitys.Preguntas;
 import com.politecnico.utilities.PersistenceConexion;
+import java.util.List;
 
 /**
  *
@@ -18,5 +19,10 @@ public class PreguntasDAO extends PersistenceConexion{
         crear(pregunta);
         return 0;
     }
+    
+    public List<Preguntas> ConsultaPreguntas(){
+        return (List<Preguntas>) obtenerLista("Preguntas.findActive", null);
+    }
+    
     
 }
