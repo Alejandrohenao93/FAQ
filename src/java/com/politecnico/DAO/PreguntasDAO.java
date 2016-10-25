@@ -20,6 +20,7 @@ public class PreguntasDAO extends PersistenceConexion{
         return 0;
     }
     
+
     public List<Preguntas> ConsultaPreguntas(){
         return (List<Preguntas>) obtenerLista("Preguntas.findActive", null);
     }
