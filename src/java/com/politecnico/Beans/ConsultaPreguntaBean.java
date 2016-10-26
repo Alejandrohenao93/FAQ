@@ -7,6 +7,7 @@ package com.politecnico.Beans;
 
 import com.politecnico.DAO.PreguntasDAO;
 import com.politecnico.Entitys.Preguntas;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -23,7 +24,7 @@ public class ConsultaPreguntaBean {
 
     }
 
-    private List<Preguntas> Preguntaslist;
+    private List<Preguntas> Preguntaslist = new ArrayList<Preguntas>();
 
     public List<Preguntas> getPreguntaslist() {
 
@@ -31,5 +32,6 @@ public class ConsultaPreguntaBean {
         Preguntaslist = dao.ConsultaPreguntas();
         return Preguntaslist;
     }
+String algo;
 
 }
