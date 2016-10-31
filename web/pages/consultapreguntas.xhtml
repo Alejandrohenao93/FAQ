@@ -11,7 +11,7 @@
     </h:head>
     <h:body>
 
-        <p:dataTable var="Preguntas" value="#{ConsultaPreguntaBean.preguntaslist}">
+        <p:dataTable var="Preguntas" value="#{preguntasBean.preguntasList}">
             <p:column headerText="Pregunta">
                 <h:outputText value="#{Preguntas.caPregunta}" />
             </p:column>

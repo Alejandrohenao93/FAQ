@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "preguntas")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Preguntas.findActive", query = "SELECT p FROM Preguntas p WHERE p.caEstado = 'Aprobado'  "),
+    @NamedQuery(name = "Preguntas.findActive", query = "SELECT p FROM Preguntas p WHERE p.caEstado = 'Aprobado' and p.feFinVigencia >= CURRENT_TIMESTAMP  "),
     @NamedQuery(name = "Preguntas.findAll", query = "SELECT p FROM Preguntas p"),
     @NamedQuery(name = "Preguntas.findByIdPregunta", query = "SELECT p FROM Preguntas p WHERE p.idPregunta = :idPregunta"),
     @NamedQuery(name = "Preguntas.findByCaPregunta", query = "SELECT p FROM Preguntas p WHERE p.caPregunta = :caPregunta"),
